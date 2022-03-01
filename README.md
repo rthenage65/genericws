@@ -1,2 +1,2 @@
-# genericws
-Generic Node Backend WebSocket
+# GenericWS
+Generic Node.js Backend WebSocket
