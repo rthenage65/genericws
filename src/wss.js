@@ -4,7 +4,7 @@ module.exports = {
 
         constructor(wss) {
             this.wss = wss;
-            this.sessions = {}; // {id: [ws,...]}
+            this.sessions = {}; // {$id: [ws,...]}
         
             this.wss.on('connection', (ws) => {
                 ws.on('message', async (message) => {
