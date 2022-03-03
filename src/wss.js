@@ -4,7 +4,7 @@ module.exports = {
 
         constructor(wss) {
             this.wss = wss;
-            this.sessions = {};
+            this.sessions = {}; // {id: [ws,...]}
         
             this.wss.on('connection', (ws) => {
                 ws.on('message', async (message) => {
@@ -19,7 +19,6 @@ module.exports = {
                     }
 
                     const session = this.sessions[request.session];
-                    let me = session.indexOf(ws);
                     if(!session.includes(ws)) {
                         session.push(ws);
                         session.forEach(peer => {
@@ -41,8 +40,8 @@ module.exports = {
                 });
 
                 ws.on('close',() => {
-                    for(let i in this.sessions) {
-                        const session = this.sessions[i];
+                    for(let id in this.sessions) {
+                        const session = this.sessions[id];
                         if(session.includes(ws)) {
                             session.splice(session.indexOf(ws),1);
 
@@ -53,7 +52,7 @@ module.exports = {
                                     }));
                                 })
                             } else {
-                                delete this.sessions[i];
+                                delete this.sessions[id];
                             }
                         }
                     }
